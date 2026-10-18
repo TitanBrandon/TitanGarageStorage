@@ -42,7 +42,7 @@ try {
     }
     await new Promise(resolve => setTimeout(resolve, 250));
   }
-  if (!ready) throw new Error('The depth server did not become ready. Run setup first and inspect the error above.');
-  console.log('\nDepth model ready. Starting Space Studio.\n');
+  if (!ready) throw new Error('The app server did not become ready. Run setup first and inspect the error above.');
+  console.log('\nApp server ready. Starting Space Studio.\n');
   run(process.execPath, [path.join(root, 'node_modules/vite/bin/vite.js'), '--host', '0.0.0.0']);
 } catch (error) { console.error(`\n${error.message}\n`); stop(1); }

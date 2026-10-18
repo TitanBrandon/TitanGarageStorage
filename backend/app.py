@@ -18,6 +18,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from starlette.concurrency import run_in_threadpool
 
 from backend.model import MODEL_NAME, MODEL_PATH, MODEL_SHA256
+from backend.worlds import provider_status, router as worlds_router
 
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 MAX_BODY_BYTES = MAX_UPLOAD_BYTES + 64 * 1024
@@ -151,13 +152,14 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Titan photo depth", lifespan=lifespan, docs_url=None, redoc_url=None)
+app = FastAPI(title="Titan Space Studio", lifespan=lifespan, docs_url=None, redoc_url=None)
 app.add_middleware(RequestLimits)
+app.include_router(worlds_router)
 
 
 @app.get("/api/health")
 def health():
-    return {"ready": engine.session is not None, "model": MODEL_NAME, "error": engine.error}
+    return {"ready": True, "depthReady": engine.session is not None, "model": MODEL_NAME, "error": engine.error, "worldsConfigured": provider_status()["configured"]}
 
 
 @app.post("/api/depth")

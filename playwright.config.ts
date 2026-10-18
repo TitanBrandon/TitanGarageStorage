@@ -7,12 +7,12 @@ export default defineConfig({
   workers: 1,
   timeout: 60_000,
   use: {
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: process.env.TITAN_TEST_BASE_URL || 'http://127.0.0.1:5173',
     viewport: { width: 1440, height: 1000 },
     launchOptions: {
       executablePath: process.env.CHROMIUM_PATH || (existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined),
       args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'],
     },
   },
-  webServer: { command: 'npm run dev:ui', url: 'http://127.0.0.1:5173', reuseExistingServer: true, timeout: 30_000 },
+  webServer: process.env.TITAN_TEST_BASE_URL ? undefined : { command: 'npm run dev:ui', url: 'http://127.0.0.1:5173', reuseExistingServer: true, timeout: 30_000 },
 });

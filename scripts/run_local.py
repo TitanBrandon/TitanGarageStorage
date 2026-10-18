@@ -1,6 +1,7 @@
 """Run the packaged app with Python only; Node is unnecessary for the built download."""
 
 import argparse
+import getpass
 import os
 from pathlib import Path
 import subprocess
@@ -29,9 +30,15 @@ def main():
         python = env_dir / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
         if not python.is_file():
             subprocess.run([sys.executable, "-m", "venv", str(env_dir)], check=True)
-        print("Preparing Space Studio. The first start downloads dependencies and a 99 MB AI model.", flush=True)
+        print("Preparing Space Studio. The first start downloads the app dependencies.", flush=True)
         subprocess.run([str(python), "-m", "pip", "install", "--disable-pip-version-check", "-r", "backend/requirements.txt"], check=True)
-        subprocess.run([str(python), "-m", "backend.download_model"], check=True)
+        if not os.environ.get("WORLDLABS_API_KEY") and not os.environ.get("WLT_API_KEY") and sys.stdin.isatty():
+            print("Photo-to-world generation uses paid World Labs API credits.", flush=True)
+            print("Create an API key at https://platform.worldlabs.ai/ .", flush=True)
+            print("Your key stays in this process and is not saved. Press Enter to use scene import only.", flush=True)
+            key = getpass.getpass("World Labs API key (typing is hidden): ").strip()
+            if key:
+                os.environ["WORLDLABS_API_KEY"] = key
         command = [str(python), str(Path(__file__).resolve()), "--serve", "--port", str(args.port)]
         if args.no_browser:
             command.append("--no-browser")

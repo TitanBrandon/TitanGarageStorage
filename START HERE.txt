@@ -1,4 +1,4 @@
-TITAN SPACE STUDIO — TRY THE PROTOTYPE
+TITAN SPACE STUDIO v0.2 — PHOTO TO WORLD
 
 1. Install Python 3.12 from https://www.python.org/downloads/release/python-31210/
    On Windows, select "Add python.exe to PATH" in the installer.
@@ -10,15 +10,23 @@ TITAN SPACE STUDIO — TRY THE PROTOTYPE
    If Mac does not open it, open Terminal in this folder and run:
      bash "Start Mac.command"
 
-The first start installs dependencies and downloads a 99 MB depth model.
+The first start installs dependencies. The launcher then asks for your World Labs
+API key. Create an API account and key at https://platform.worldlabs.ai/ and add
+credits there. These API credits may be separate from a consumer subscription.
+The key is hidden while you type/paste it and is not saved to disk. You enter it
+again on each launch. To skip the key and import a scene export, press Enter.
+
 Your browser opens automatically when the app is ready. Keep the terminal window
 open while using it. Press Ctrl+C in that window to stop the app.
 
-Choose a photo, then click "Create 3D view". Try Orbit or Walk through.
-Photos are processed on your computer by this download. No AI API key is needed.
+Choose a photo, choose the generation quality, then click the generation button.
+Generation sends your photo to World Labs and spends your API credits. It can
+take several minutes. The app never automatically retries a paid submission.
+You can also import an existing SPZ/PLY/SPLAT scene without an API key.
 
-One photo gives approximate depth of the visible surfaces. It does not recover
-hidden surfaces or true measurements. The sample showroom is separately modeled.
+The new viewer displays real Gaussian-splat scene data. It does not show the old
+cartoon showroom. One-photo world generation estimates hidden areas; it does not
+produce a measured scan or guarantee exact cars, signs or room dimensions.
 
 Publishing the Codex environment saves a development workspace. This download is
 a way to run the app on your computer; it does not deploy a public website.
