@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: titan-space-studio
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /healthz
+    autoDeploy: false
+    envVars:
+      - key: WORLDLABS_API_KEY
+        sync: false
+      - key: SITE_PASSWORD
+        generateValue: true

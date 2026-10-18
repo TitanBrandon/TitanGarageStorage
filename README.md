@@ -4,6 +4,12 @@ Upload a real photo, generate an explorable scene using the World Labs Marble AP
 
 **A provider API key and API credits are required to generate a world.** The integration cannot be described as live-validated until it successfully generates a world with an authorized account. Local exported SPZ/PLY/SPLAT scenes can be imported without an API key.
 
+## Open it as a website
+
+[**Deploy Space Studio to Render**](https://render.com/deploy?repo=https://github.com/TitanBrandon/TitanGarageStorage)
+
+Deploy once, then bookmark the website Render provides. No local Python, downloads or terminal are needed. The included Blueprint selects free hosting, keeps the World Labs key on the server, and generates a site password. Sign in with username **titan** and the generated password. Free hosting may pause when idle; an always-on plan is optional. See [DEPLOY.md](DEPLOY.md) for the one-time account and deployment steps. A public website is not created just by publishing the Codex environment.
+
 ## Try the Windows download
 
 [**Download Space Studio v0.2 for Windows**](https://github.com/TitanBrandon/TitanGarageStorage/raw/refs/heads/main/downloads/Titan-Space-Studio-Windows-v0.2.zip)

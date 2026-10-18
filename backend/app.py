@@ -13,51 +13,17 @@ from contextlib import asynccontextmanager
 import numpy as np
 import onnxruntime as ort
 from fastapi import FastAPI, HTTPException, UploadFile
-from fastapi.responses import JSONResponse
 from PIL import Image, ImageOps, UnidentifiedImageError
 from starlette.concurrency import run_in_threadpool
 
 from backend.model import MODEL_NAME, MODEL_PATH, MODEL_SHA256
+from backend.limits import MAX_BODY_BYTES, MAX_UPLOAD_BYTES, RequestLimits
 from backend.worlds import provider_status, router as worlds_router
 
-MAX_UPLOAD_BYTES = 15 * 1024 * 1024
-MAX_BODY_BYTES = MAX_UPLOAD_BYTES + 64 * 1024
 MAX_PIXELS = 24_000_000
 OUTPUT_LONG_EDGE = 1600
 Image.MAX_IMAGE_PIXELS = MAX_PIXELS
 LOGGER = logging.getLogger("titan.depth")
-
-
-class RequestLimits:
-    """Cap multipart bodies before parsing and reject cross-site browser uploads."""
-
-    def __init__(self, app):
-        self.app = app
-
-    async def __call__(self, scope, receive, send):
-        if scope["type"] != "http":
-            return await self.app(scope, receive, send)
-        headers = dict(scope.get("headers", []))
-        if scope["method"] == "POST" and headers.get(b"sec-fetch-site") == b"cross-site":
-            return await JSONResponse({"detail": "Cross-site uploads are not allowed."}, status_code=403)(scope, receive, send)
-        try:
-            declared_size = int(headers.get(b"content-length", b"0"))
-        except ValueError:
-            return await JSONResponse({"detail": "Invalid request length."}, status_code=400)(scope, receive, send)
-        if declared_size > MAX_BODY_BYTES:
-            return await JSONResponse({"detail": "Choose an image smaller than 15 MB."}, status_code=413)(scope, receive, send)
-        received = 0
-
-        async def limited_receive():
-            nonlocal received
-            message = await receive()
-            if message["type"] == "http.request":
-                received += len(message.get("body", b""))
-                if received > MAX_BODY_BYTES:
-                    raise HTTPException(413, "Choose an image smaller than 15 MB.")
-            return message
-
-        return await self.app(scope, limited_receive, send)
 
 
 class DepthEngine:
