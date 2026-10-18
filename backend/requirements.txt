@@ -1,0 +1,27 @@
+# Resolved with Python 3.12; includes httpx for the local API verification suite.
+annotated-types==0.8.0
+anyio==4.15.1
+certifi==2026.7.22
+click==8.5.0
+coloredlogs==15.0.1
+fastapi==0.115.14
+flatbuffers==25.12.19
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+humanfriendly==10.0
+idna==3.20
+mpmath==1.3.0
+numpy==2.2.6
+onnxruntime==1.22.1
+packaging==26.3
+pillow==11.3.0
+protobuf==7.36.2
+pydantic==2.14.1
+pydantic_core==2.50.1
+python-multipart==0.0.20
+starlette==0.46.2
+sympy==1.14.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+uvicorn==0.34.3

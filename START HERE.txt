@@ -1,0 +1,24 @@
+TITAN SPACE STUDIO — TRY THE PROTOTYPE
+
+1. Install Python 3.12 from https://www.python.org/downloads/release/python-31210/
+   On Windows, select "Add python.exe to PATH" in the installer.
+
+2. Extract the entire ZIP to a folder on your computer. Do not run it inside the ZIP.
+
+3. Windows: double-click "Start Windows.bat".
+   Mac: double-click "Start Mac.command".
+   If Mac does not open it, open Terminal in this folder and run:
+     bash "Start Mac.command"
+
+The first start installs dependencies and downloads a 99 MB depth model.
+Your browser opens automatically when the app is ready. Keep the terminal window
+open while using it. Press Ctrl+C in that window to stop the app.
+
+Choose a photo, then click "Create 3D view". Try Orbit or Walk through.
+Photos are processed on your computer by this download. No AI API key is needed.
+
+One photo gives approximate depth of the visible surfaces. It does not recover
+hidden surfaces or true measurements. The sample showroom is separately modeled.
+
+Publishing the Codex environment saves a development workspace. This download is
+a way to run the app on your computer; it does not deploy a public website.
