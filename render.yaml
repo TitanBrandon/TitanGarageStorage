@@ -7,7 +7,9 @@ services:
     healthCheckPath: /healthz
     autoDeploy: false
     envVars:
-      - key: WORLDLABS_API_KEY
+      - key: WORKER_URL
+        sync: false
+      - key: WORKER_TOKEN
         sync: false
       - key: SITE_PASSWORD
         generateValue: true

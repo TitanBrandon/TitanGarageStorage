@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "builder": "Blender structured-scene reconstruction",
+  "blender_version": "3.4.1",
+  "coordinate_system": "Y-up, meters, object-front +Z",
+  "artifacts": {
+    "blend": "scene.blend",
+    "glb": "scene.glb",
+    "preview": "preview.png",
+    "scene": "scene.json"
+  },
+  "mesh_count": 10,
+  "vertex_count": 80,
+  "triangle_count": 120,
+  "gltf_mesh_count": 10,
+  "gltf_material_count": 8,
+  "embedded_texture_count": 13,
+  "texture_names": [
+    "textures/back-object-1-front.png",
+    "textures/blender_back-object-1-front_normal.png",
+    "textures/blender_back-object-1_normal.png",
+    "textures/blender_floor_normal.png",
+    "textures/blender_unseen-wall_normal.png",
+    "textures/blender_wall-left_normal.png",
+    "textures/blender_wall-right_normal.png",
+    "textures/blender_wall_normal.png",
+    "textures/floor.png",
+    "textures/wall-left.png",
+    "textures/wall-right.png",
+    "textures/wall.png",
+    "textures/window-1.png"
+  ],
+  "camera": {
+    "position": [
+      1.5969844413684224,
+      1.6681625594014913,
+      3.1040749683549866
+    ],
+    "target": [
+      1.5969844413684224,
+      -0.13234017790963493,
+      -3.5135084612158223
+    ],
+    "fov": 47.553467777197234,
+    "aspect": 1.5023474178403755,
+    "fov_axis": "vertical"
+  },
+  "walk_start": {
+    "position": [
+      1.5969844413684224,
+      1.65,
+      3.1040749683549866
+    ],
+    "target": [
+      1.5969844413684224,
+      -0.1505027373111263,
+      -3.5135084612158223
+    ]
+  },
+  "room": {
+    "width": 6.054017896386529,
+    "depth": 7.508149936709973,
+    "height": 2.7,
+    "floor_polygon": [
+      [
+        -3.0270089481932647,
+        -3.7540749683549866
+      ],
+      [
+        3.0270089481932647,
+        -3.7540749683549866
+      ],
+      [
+        3.0270089481932647,
+        3.7540749683549866
+      ],
+      [
+        -3.0270089481932647,
+        3.7540749683549866
+      ]
+    ]
+  },
+  "collisions": [
+    {
+      "id": "back solid 0",
+      "kind": "wall",
+      "position": [
+        -1.991987076351974,
+        1.35,
+        -3.7540749683549866
+      ],
+      "dimensions": [
+        2.0700437436825814,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 1",
+      "kind": "wall",
+      "position": [
+        -0.014730366897132807,
+        0.5949207363609503,
+        -3.7540749683549866
+      ],
+      "dimensions": [
+        1.884469675227102,
+        1.1898414727219007,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 2",
+      "kind": "wall",
+      "position": [
+        -0.014730366897132807,
+        2.278847275402116,
+        -3.7540749683549866
+      ],
+      "dimensions": [
+        1.884469675227102,
+        0.842305449195768,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 3",
+      "kind": "wall",
+      "position": [
+        1.977256709454842,
+        1.35,
+        -3.7540749683549866
+      ],
+      "dimensions": [
+        2.099504477476846,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back window 0",
+      "kind": "window",
+      "position": [
+        -0.014730366897132807,
+        1.5237680117630665,
+        -3.7540749683549866
+      ],
+      "dimensions": [
+        1.884469675227102,
+        0.6678530780823315,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "left solid 0",
+      "kind": "wall",
+      "position": [
+        -3.0270089481932647,
+        1.35,
+        0
+      ],
+      "dimensions": [
+        7.508149936709973,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 1.5707963267948966
+    },
+    {
+      "id": "right solid 0",
+      "kind": "wall",
+      "position": [
+        3.0270089481932647,
+        1.35,
+        0
+      ],
+      "dimensions": [
+        7.508149936709973,
+        2.7,
+        0.12
+      ],
+      "rotation_y": -1.5707963267948966
+    },
+    {
+      "id": "front-estimated solid 0",
+      "kind": "wall",
+      "position": [
+        0,
+        1.35,
+        3.7540749683549866
+      ],
+      "dimensions": [
+        6.054017896386529,
+        2.7,
+        0.12
+      ],
+      "rotation_y": -3.141592653589793
+    },
+    {
+      "id": "back-object-1",
+      "kind": "box",
+      "position": [
+        0.5711048966297607,
+        0.6198545435926404,
+        -3.3890749683549863
+      ],
+      "dimensions": [
+        2.72071801539693,
+        1.2397090871852807,
+        0.7
+      ],
+      "rotation_y": 0
+    }
+  ],
+  "source": {
+    "image_path": "source.jpg",
+    "width": 640,
+    "height": 426,
+    "sha256": "4ea710d1a4bd17655908bb3861146b4373f28d0116df9f758c680698d25a5b99"
+  },
+  "warnings": [
+    "Dimensions are estimates anchored to an assumed 2.7 m ceiling; a single photograph cannot establish metric scale.",
+    "Hidden geometry, furniture backs and surfaces behind the camera are unobserved estimates. Only box-like major objects are supported.",
+    "The wall behind the source camera is an estimated solid closure with a sampled wall finish; its actual shape, openings and details are unknown.",
+    "Source lighting is partly baked into photographed finishes; browser reflections and unseen materials are approximations.",
+    "The confidence score measures floor/edge support, not photographic fidelity or semantic accuracy. Review the photo comparison and detected regions.",
+    "One or both outer wall corners are cropped. Side-wall positions require review in the correction controls.",
+    "A wall/ceiling junction was not established. The ceiling is left open instead of placing an unsupported low roof.",
+    "Object semantics and depth are uncertain. Review detected cabinet/box positions and dimensions; small objects are omitted.",
+    "Detected openings are geometric hypotheses; review them before using the model for planning."
+  ],
+  "validation": {
+    "glb_version": 2,
+    "embedded_textures": true,
+    "has_real_meshes": true,
+    "preview_renderer": "Cycles CPU"
+  }
+}

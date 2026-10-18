@@ -1,0 +1,693 @@
+{
+  "runId": "20261018T095847Z-9cfaf4",
+  "startedAt": "2026-10-18T09:58:47.649005+00:00",
+  "kind": "actual Docker worker + authenticated production web + Playwright browser",
+  "webURL": "http://127.0.0.1:8023",
+  "workerURL": "http://127.0.0.1:8022",
+  "resourceLimits": {
+    "workerMemory": "8g",
+    "workerCPUs": 4,
+    "webMemory": "512m",
+    "webCPUs": 1
+  },
+  "volume": "titan-validation-data-20261018t095847z-9cfaf4",
+  "retainedVolumeCleanup": "docker volume rm titan-validation-data-20261018t095847z-9cfaf4",
+  "cloudNetwork": false,
+  "skippedBuild": true,
+  "allPassed": true,
+  "dockerVersion": "28.4.0",
+  "nodeVersion": "v24.19.0",
+  "images": {
+    "web": {
+      "tag": "titan-space-studio:hosted",
+      "id": "sha256:8e3cee3c3e680f772488af1f36c2bc8582ac2c4bed4d58d14b405b52f726cc76"
+    },
+    "worker": {
+      "tag": "titan-space-studio:worker",
+      "id": "sha256:94bcce55ba97198f6edcc6560de068d89222857b9702903b9d946ca7d3ccd4a0"
+    }
+  },
+  "readiness": {
+    "configured": true,
+    "workerReachable": true,
+    "setupRequired": false,
+    "ready": true,
+    "missing": [],
+    "storage": "PROJECTS_DIR",
+    "message": "Blender reconstruction worker is ready."
+  },
+  "workerVersions": {
+    "python": "3.12.15",
+    "packages": {
+      "numpy": "2.2.6",
+      "onnxruntime": "1.22.1",
+      "Pillow": "11.3.0",
+      "opencv-python-headless": "4.11.0.86",
+      "fastapi": "0.115.14",
+      "httpx": "0.28.1"
+    }
+  },
+  "blenderVersion": "Blender 3.4.1",
+  "browserTestsExitCode": 0,
+  "durability": {
+    "passed": true,
+    "workerRestarted": true,
+    "reopenedProjects": [
+      {
+        "id": "f5533fd6-8220-4863-b841-51131e4e7a3f",
+        "state": "completed",
+        "glbBytes": 582604
+      },
+      {
+        "id": "b8c7e12d-fb80-4fde-84ea-2bfc5481ac9d",
+        "state": "completed",
+        "glbBytes": 985820
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": "f5533fd6-8220-4863-b841-51131e4e7a3f",
+      "name": "room",
+      "state": "completed",
+      "stage": "completed",
+      "revision": 1
+    },
+    {
+      "id": "b8c7e12d-fb80-4fde-84ea-2bfc5481ac9d",
+      "name": "warehouse",
+      "state": "completed",
+      "stage": "completed",
+      "revision": 1
+    }
+  ],
+  "resourceSamples": [
+    {
+      "time": "2026-10-18T09:59:00.908032+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 139kB",
+          "CPUPerc": "0.35%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.40%",
+          "MemUsage": "32.95MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "4"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "7.43%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "7.03%",
+          "MemUsage": "35.99MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "3"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:05.496684+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 586kB",
+          "CPUPerc": "173.10%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.43%",
+          "MemUsage": "35.43MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "7"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.18%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "7.44%",
+          "MemUsage": "38.11MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:10.068837+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 1.04MB",
+          "CPUPerc": "244.21%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "2.15%",
+          "MemUsage": "176.2MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "23"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "6.92%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.13%",
+          "MemUsage": "41.61MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:14.649998+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 1.5MB",
+          "CPUPerc": "253.79%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "2.07%",
+          "MemUsage": "169.4MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "23"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "11.31%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.13%",
+          "MemUsage": "41.6MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:19.192717+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 1.82MB",
+          "CPUPerc": "258.80%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "2.04%",
+          "MemUsage": "167MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "22"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "5.82%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.27%",
+          "MemUsage": "42.34MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:23.734084+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.32%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.41MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.18%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:28.288618+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.35%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.63MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.18%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:32.862054+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.34%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.41MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.28%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:37.404720+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.35%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.57MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.19%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:41.971557+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.36%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.6MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.18%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:46.520723+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.33%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.51MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.17%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:51.095884+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "0.35%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.54MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.17%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.34%",
+          "MemUsage": "42.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T09:59:55.616043+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.01MB",
+          "CPUPerc": "2.19%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.47%",
+          "MemUsage": "38.65MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "1.10%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.31%",
+          "MemUsage": "42.56MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "4"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:00.209910+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.19MB",
+          "CPUPerc": "48.34%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.73%",
+          "MemUsage": "59.82MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "7"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "13.33%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.44%",
+          "MemUsage": "43.19MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:04.763490+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 2.67MB",
+          "CPUPerc": "233.01%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "2.08%",
+          "MemUsage": "170.6MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "23"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "1.06%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.46%",
+          "MemUsage": "43.29MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:09.300099+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 3.08MB",
+          "CPUPerc": "255.34%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "2.01%",
+          "MemUsage": "164.6MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "23"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "5.76%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.50%",
+          "MemUsage": "43.54MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:13.857868+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 3.54MB",
+          "CPUPerc": "199.28%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.48%",
+          "MemUsage": "39.33MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "5.81%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.45%",
+          "MemUsage": "43.26MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:18.391226+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 3.64MB",
+          "CPUPerc": "0.40%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.49%",
+          "MemUsage": "39.8MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "4"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.21%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.53%",
+          "MemUsage": "43.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:22.928574+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 3.64MB",
+          "CPUPerc": "0.35%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.49%",
+          "MemUsage": "39.8MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "4"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.20%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.53%",
+          "MemUsage": "43.68MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "8"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:27.476675+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 3.64MB",
+          "CPUPerc": "0.38%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.49%",
+          "MemUsage": "40.05MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "4"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "12.81%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.55%",
+          "MemUsage": "43.77MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "9"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:32.027684+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 3.64MB",
+          "CPUPerc": "0.34%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.52%",
+          "MemUsage": "42.52MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "5"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "2.22%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.62%",
+          "MemUsage": "44.15MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "9"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-18T10:00:36.555323+00:00",
+      "containers": [
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "0.00%",
+          "Container": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "ID": "a6fbd4ba97c5",
+          "MemPerc": "0.39%",
+          "MemUsage": "32.07MiB / 8GiB",
+          "Name": "titan-validation-worker-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "3"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "40.76%",
+          "Container": "titan-validation-web-20261018t095847z-9cfaf4",
+          "ID": "f0e341b0fa89",
+          "MemPerc": "8.55%",
+          "MemUsage": "43.78MiB / 512MiB",
+          "Name": "titan-validation-web-20261018t095847z-9cfaf4",
+          "NetIO": "0B / 0B",
+          "PIDs": "9"
+        }
+      ]
+    }
+  ],
+  "removedOwnedContainers": [
+    "titan-validation-web-20261018t095847z-9cfaf4",
+    "titan-validation-worker-20261018t095847z-9cfaf4"
+  ],
+  "retainedVolume": "titan-validation-data-20261018t095847z-9cfaf4",
+  "independentVolumeReopen": {
+    "passed": true,
+    "newContainer": true,
+    "originalContainersRemoved": true,
+    "completedProjects": 2
+  },
+  "elapsedSeconds": 117.46,
+  "finishedAt": "2026-10-18T10:00:45.108054+00:00"
+}

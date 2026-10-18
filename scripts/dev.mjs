@@ -25,15 +25,17 @@ function run(command, args) {
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => stop());
 
 try {
+  if ((process.env.SITE_PASSWORD || '').length < 16) throw new Error('Set SITE_PASSWORD to at least 16 characters. Sign in as titan. See README.md for worker configuration.');
+  if (!process.env.WORKER_URL || !process.env.WORKER_TOKEN) console.log('Reconstruction worker is not configured. The UI will show setup instructions; model creation needs a separate worker.');
   // Never adopt or stop an unrelated process occupying the API port.
   let occupied = false;
-  try { const response = await fetch('http://127.0.0.1:8000/api/health', { signal: AbortSignal.timeout(1000) }); occupied = response.ok; } catch { /* Start our own backend. */ }
+  try { const response = await fetch('http://127.0.0.1:8000/healthz', { signal: AbortSignal.timeout(1000) }); occupied = response.ok; } catch { /* Start our own backend. */ }
   if (occupied) throw new Error('Port 8000 is already in use. Stop the existing backend, or run npm run dev:ui to reuse it.');
-  run(python, ['-m', 'uvicorn', 'backend.app:app', '--host', '127.0.0.1', '--port', '8000']);
+  run(python, ['-m', 'uvicorn', 'backend.hosted:app', '--host', '127.0.0.1', '--port', '8000', '--workers', '1']);
   let ready = false;
   for (let attempt = 0; attempt < 80 && !stopping; attempt++) {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/health', { signal: AbortSignal.timeout(500) });
+      const response = await fetch('http://127.0.0.1:8000/healthz', { signal: AbortSignal.timeout(500) });
       const health = await response.json();
       if (health.ready) { ready = true; break; }
       if (health.error) throw new Error(health.error);
@@ -43,6 +45,6 @@ try {
     await new Promise(resolve => setTimeout(resolve, 250));
   }
   if (!ready) throw new Error('The app server did not become ready. Run setup first and inspect the error above.');
-  console.log('\nApp server ready. Starting Space Studio.\n');
-  run(process.execPath, [path.join(root, 'node_modules/vite/bin/vite.js'), '--host', '0.0.0.0']);
+  console.log('\nWebsite ready. Sign in as titan with SITE_PASSWORD. Starting Space Studio UI.\n');
+  run(process.execPath, [path.join(root, 'node_modules/vite/bin/vite.js'), '--host', process.env.TITAN_UI_HOST || '127.0.0.1']);
 } catch (error) { console.error(`\n${error.message}\n`); stop(1); }

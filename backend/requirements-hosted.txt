@@ -1,4 +1,4 @@
-# Python 3.12 hosted API; no local depth model, NumPy, or ONNX runtime required.
+# Python 3.12 lightweight hosted API/proxy. Reconstruction runs on the worker.
 annotated-types==0.8.0
 anyio==4.15.1
 certifi==2026.7.22

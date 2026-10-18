@@ -7,6 +7,8 @@ export default defineConfig({
   workers: 1,
   timeout: 60_000,
   use: {
+    actionTimeout: 15_000,
+    navigationTimeout: 30_000,
     baseURL: process.env.TITAN_TEST_BASE_URL || 'http://127.0.0.1:5173',
     httpCredentials: process.env.TITAN_TEST_SITE_PASSWORD ? { username: 'titan', password: process.env.TITAN_TEST_SITE_PASSWORD } : undefined,
     viewport: { width: 1440, height: 1000 },

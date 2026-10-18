@@ -1,89 +1,150 @@
-# Open Space Studio from a website
+# Deploy the Blender reconstruction workflow
 
-Deploy this app once to Render, then open its web address from Windows, a phone,
-or another computer. Your computer does not need Python, Node.js, or a terminal.
-The website uses the World Labs API to generate scenes; its key stays on the
-server. A shared password protects the app and its paid generation endpoints.
+Keep **https://titan-space-studio.onrender.com/** and the existing Render service
+**`srv-dba8m4ss728c738gk3ng`**. Its lightweight Python server serves the browser
+app, preserves the `titan`/`SITE_PASSWORD` login, and proxies private project
+requests to a separate reconstruction worker. The worker runs local analysis,
+the pinned depth model, and headless Blender, with projects on persistent disk.
+No scene-generation API key or per-generation service is used.
 
-[**Deploy Space Studio to Render**](https://render.com/deploy?repo=https://github.com/TitanBrandon/TitanGarageStorage)
+The Render web image deliberately does not install Blender or load the depth
+model. `render.yaml` requests a Free web service; this is a configuration default,
+**not verification of the existing service's actual plan, memory, or CPU**.
+There were no Render API credentials available to inspect that service, and this
+development environment blocked outbound access to the live site and Render
+documentation. Check its **Instance Type** page for actual resources. Do not
+assume a small web instance can run reconstruction. The CPU worker needs no GPU.
 
-## First deployment
+## 1. Provide an existing worker host and durable storage
 
-1. Open the deployment link and sign in to Render or create an account. If
-   prompted, connect GitHub and allow access to `TitanBrandon/TitanGarageStorage`.
-2. Render reads this repository's `render.yaml`. It creates one **Free** web
-   service named `titan-space-studio`. Keep the Free plan for this experiment.
-3. Enter your **World Labs API key** for `WORLDLABS_API_KEY` in Render's secure
-   environment field. Get an API key and generation credits from
-   [World Labs](https://platform.worldlabs.ai/). Do not put the key in a source
-   file, a GitHub commit, or this chat.
-4. Deploy the Blueprint and wait for the service to show **Live**. The first
-   build installs dependencies and builds the app, so it can take several minutes.
-5. Open the service in your Render dashboard. In **Environment**, reveal and
-   copy the automatically generated `SITE_PASSWORD` into your password manager.
-   If your dashboard does not let you reveal it, replace it there with a unique
-   password of at least 16 characters and save/redeploy.
-6. Click the service's `https://...onrender.com` address. When your browser asks
-   for a username and password, use **`titan`** and your `SITE_PASSWORD`.
-7. Bookmark that address. On later visits, open the bookmark, sign in if asked,
-   upload a photo, and start a generation.
+Use an available Linux server or Linux Docker host with Docker Engine and
+Compose v2. Start with **4 CPU cores, 8 GB RAM, and 20 GB free persistent disk**,
+growing with saved projects. These are provisioning targets; actual usage and
+processing time depend on the image and retained revisions. Installation needs
+Debian repositories, the Python index, and the pinned GitHub model release.
+Inference and Blender do not call an external model provider after installation.
 
-Creating or publishing a Codex development environment does not create this
-Render website. The deployment link starts a separate hosting setup; this
-repository does not provision a hosting account or spend provider credits.
+The worker also needs a stable HTTPS address reachable from Render. A private
+`localhost` server on your computer is not reachable from Render. Use an existing
+trusted reverse proxy or the optional Caddy TLS service below. This project does
+not buy compute, upgrade a plan, or create a storage service. If no suitable host
+exists, provide that compute and persistent disk before enabling hosted uploads.
 
-## Costs and availability
+On the worker host, obtain this repository and create an ignored **`.env.worker`**
+file in its root. Generate a long random token in your password manager and set:
 
-The Blueprint requests Render's Free web service. Review Render's current limits
-and pricing before deploying. Free services sleep when unused, so the first visit
-after a break may take roughly a minute to wake up. Upgrading to a paid instance
-is optional if you later want the service to stay awake.
+```dotenv
+WORKER_TOKEN=replace-with-a-long-random-secret
+WORKER_DOMAIN=worker.your-real-domain.example
+```
 
-World Labs generation still uses your World Labs credits. You approve a new
-generation in the app; restarting the site or reopening an existing operation
-does not automatically request another paid generation. Never share the site
-password with someone you do not want using your generation credits.
+Use a real domain you control. Point its DNS to this server and permit inbound
+TCP 80/443 if using Caddy. Keep the same `WORKER_TOKEN` for Render's secure
+environment settings. Never commit it or include it in browser code or URLs.
 
-The app has a shared login for this personal experiment. It does not provide
-separate customer accounts, per-person usage budgets, or a permanent photo
-library. Generated scenes remain subject to the provider's availability and
-retention. A single photo also estimates unseen areas; it is not a measured scan.
+```sh
+docker compose --env-file .env.worker -f docker-compose.worker.yml build worker
+docker compose --env-file .env.worker -f docker-compose.worker.yml --profile https up -d
+```
 
-## Updates and troubleshooting
+For an existing HTTPS reverse proxy, omit `--profile https` and proxy to
+`http://127.0.0.1:8012`, preserving Authorization headers. The direct worker port
+binds to loopback. Caddy's optional profile obtains TLS certificates and proxies
+to `worker:8012`. The worker requires its bearer token for project data and
+generated artifacts even behind HTTPS. Do not expose its files as public static
+downloads.
 
-Automatic deployment is disabled. After changes reach GitHub, open the Render
-service and select **Manual Deploy → Deploy latest commit** when you want to
-publish them. Changes to `render.yaml` itself may require syncing its Blueprint
-in the Render dashboard.
+The image installs **Blender `3.4.1+dfsg-2+b1`** from Debian Bookworm's signed
+repository; this candidate was checked in an actual Bookworm container.
+`backend/requirements-worker.txt` pins ONNX Runtime, NumPy, OpenCV, Pillow, and the
+API dependencies. The build downloads the existing Depth Anything V2 Small ONNX
+release and checks its fixed byte count and SHA-256. No model download is needed
+at runtime. See [model provenance and license](backend/MODELS.md).
 
-- **Cannot sign in:** the username is exactly `titan`; reset `SITE_PASSWORD` in
-  Render's Environment settings if necessary, then save/redeploy.
-- **Provider is not connected:** confirm `WORLDLABS_API_KEY` is present in
-  Render's Environment settings and that the account has API access and credits.
-- **First visit waits:** allow the Free service to wake up, then reload once.
-- **Deployment fails:** open Render's build/runtime logs. The app expects its
-  compiled frontend in `dist/`, a `SITE_PASSWORD` of at least 16 characters, and a valid `PORT`.
-  The included multi-stage Dockerfile creates the frontend and the small Python
-  API runtime together. It does not install or download the old depth model.
-- **A generation is already running:** return to the existing operation in the
-  same browser; do not repeatedly submit the photo and incur extra charges.
+The worker runs as UID/GID **10001:10001**. Compose mounts the named
+**`titan_projects`** volume at `/data`; `PROJECTS_DIR=/data/projects` contains
+`projects.sqlite3`, uploads, scene descriptions, per-revision textures, previews,
+GLBs, and editable Blender files. Preserve this volume when replacing containers.
+For a bind mount or an existing persistent disk, give UID 10001 write access and
+mount it at `/data`. Production projects must not live on ephemeral container or
+Render web storage.
 
-The health check is `GET /healthz`; the app and its generation API require the
-shared login. Environment secrets are runtime settings and are never build
-arguments. Public hosting has not been verified until a Render deployment is
-Live and a browser successfully signs in. A real World Labs generation also
-requires an authorized key and sufficient credits.
+## 2. Connect the existing Render website
 
-Official references: [Render Blueprints](https://render.com/docs/infrastructure-as-code),
-[Blueprint specification](https://render.com/docs/blueprint-spec), and
-[Free services](https://render.com/docs/free).
+After this code reaches the existing repository's `main` branch:
 
-## Development verification
+1. Open [the existing service's Environment settings](https://dashboard.render.com/web/srv-dba8m4ss728c738gk3ng/env).
+2. Keep **`SITE_PASSWORD`**. Username remains **`titan`**. The production server
+   requires at least 16 password characters; securely replace an older short
+   password if needed.
+3. Add **`WORKER_URL=https://your-actual-worker-domain`** and **`WORKER_TOKEN`**
+   with the same secret used by the worker. Do not append `/api/projects` to the
+   URL.
+4. Remove unused `WORLDLABS_API_KEY`/`WLT_API_KEY` bindings when selecting the new
+   code. Blender reconstruction does not require them.
+5. Save settings, then use **Manual Deploy → Deploy latest commit** on this same
+   Render service. Preserve its URL and health check **`/healthz`**. Do not create
+   a duplicate website or a new paid worker through a Blueprint.
+6. Open **https://titan-space-studio.onrender.com/**, sign in, and check worker
+   availability before uploading.
 
-The hosted server checks run with `python -m unittest backend.test_hosted backend.test_worlds -v`.
-`python scripts/build_hosted.py` builds the image on a normal Docker host.
-Inside the managed cloud workspace, use `python scripts/build_hosted.py --cloud-network`:
-the helper preserves the existing proxy and certificate verification, maps the
-proxy hostname for the Docker builder, and uses a temporary public CA secret.
-Proxy values and the trust bundle are not copied into the final image. Render's
-normal build does not need these managed-cloud options.
+The Blueprint's `SITE_PASSWORD: generateValue: true` is for initial service
+creation; it does not instruct you to replace this website's current password.
+Use the existing dashboard settings above. Automatic deployment stays disabled.
+
+Public worker addresses must use HTTPS. HTTP on a trusted private Docker network
+requires **`WORKER_ALLOW_HTTP=1`** on the web process; never enable that exception
+for an internet-facing worker. Localhost HTTP is supported for local testing.
+
+## 3. Use and operate the site
+
+Upload a permitted garage/interior photo and select **Create 3D walkthrough**.
+The app creates a durable project and reports its real processing stages. Open
+the completed walkthrough, compare the source-camera preview with the upload,
+and download its GLB or Blender project. Reloading reconnects to saved projects;
+the worker's database and disk are the project store, rather than browser data.
+
+The default worker processes one reconstruction at a time, bounds its queue, and
+gives photo analysis a 300-second time limit (`ANALYSIS_TIMEOUT_SECONDS`) and
+Blender an 1800-second time limit (`BLENDER_TIMEOUT_SECONDS`).
+Leave the worker host running during jobs. Use the in-app cancellation control
+when needed. Inspect failures with:
+
+```sh
+docker compose --env-file .env.worker -f docker-compose.worker.yml logs --tail=100 worker
+```
+
+Update on the same host with the same Compose project and persistent volume:
+
+```sh
+git pull --ff-only
+docker compose --env-file .env.worker -f docker-compose.worker.yml build worker
+docker compose --env-file .env.worker -f docker-compose.worker.yml --profile https up -d
+```
+
+Back up the **whole `/data/projects` directory**, including the SQLite database,
+WAL files, and all project assets, to independent durable storage. Stop the
+worker for a simple consistent filesystem backup, or use SQLite's supported
+online backup with matching assets. Do not delete the volume during updates.
+Monitor disk capacity and use your own retention policy for saved projects.
+
+The shared login lets its users access this site's projects and worker capacity;
+this personal deployment has no separate customer accounts. Uploaded photos stay
+on your worker's disk, so protect that disk and its backups.
+
+## Validation and limits
+
+Both the web server and worker must be connected before the public site can
+generate scenes. A successful build or web health check alone does not establish
+that the hosted path works. After connection, test a real upload, completed
+Blender export, textured walkthrough, page reload, and protected GLB/Blender
+downloads.
+
+One photo cannot determine exact dimensions or hidden surfaces. Automatic room,
+opening, object, and material estimates can be wrong; inspect the comparison and
+use corrections. Unsupported or ambiguous photos should request correction or
+fail. This workflow does not promise a photographically exact scan from one image.
+
+Blender is GPL software; Depth Anything V2 Small is Apache-2.0 licensed. Keep
+model provenance and dependency notices with distributions, and use photos you
+have permission to process.

@@ -1,0 +1,69 @@
+FROM python:3.12-slim-bookworm
+WORKDIR /app
+
+# Debian's signed packages supply Blender and its glTF exporter. Keep the tested
+# version explicit; upgrades require rerunning the reconstruction/export checks.
+ARG BLENDER_PACKAGE_VERSION=3.4.1+dfsg-2+b1
+RUN --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then \
+      export SSL_CERT_FILE=/run/secrets/build_ca; \
+      export APT_CA_OPTION="-o Acquire::https::CaInfo=/run/secrets/build_ca"; \
+    fi; \
+    apt-get $APT_CA_OPTION \
+      -o Acquire::http::Proxy="$HTTP_PROXY" \
+      -o Acquire::https::Proxy="$HTTPS_PROXY" update && \
+    apt-get $APT_CA_OPTION \
+      -o Acquire::http::Proxy="$HTTP_PROXY" \
+      -o Acquire::https::Proxy="$HTTPS_PROXY" \
+      install -y --no-install-recommends blender="$BLENDER_PACKAGE_VERSION" ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8012 \
+    PROJECTS_DIR=/data/projects \
+    TITAN_DEPTH_MODEL_PATH=/app/backend/models/depth_anything_v2_vits.onnx \
+    BLENDER_BIN=/usr/bin/blender \
+    BLENDER_TIMEOUT_SECONDS=1800 \
+    OMP_NUM_THREADS=4 \
+    OPENBLAS_NUM_THREADS=1
+
+COPY backend/requirements-hosted.txt backend/requirements-worker.txt ./backend/
+RUN --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then export PIP_CERT=/run/secrets/build_ca; fi; \
+    python -m pip install --no-cache-dir -r backend/requirements-worker.txt
+COPY backend/__init__.py backend/model.py backend/download_model.py ./backend/
+RUN --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then export SSL_CERT_FILE=/run/secrets/build_ca; fi; \
+    python -m backend.download_model
+
+# Debian Blender embeds Python 3.11; /usr/local Python 3.12 owns the analysis
+# dependencies. Install the distinct Blender NumPy via signed Debian packages.
+# Keep this additive stage after model download to preserve existing caches.
+ARG BLENDER_NUMPY_PACKAGE_VERSION=1:1.24.2-1+deb12u1
+RUN --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then \
+      export SSL_CERT_FILE=/run/secrets/build_ca; \
+      export APT_CA_OPTION="-o Acquire::https::CaInfo=/run/secrets/build_ca"; \
+    fi; \
+    apt-get $APT_CA_OPTION \
+      -o Acquire::http::Proxy="$HTTP_PROXY" \
+      -o Acquire::https::Proxy="$HTTPS_PROXY" update && \
+    apt-get $APT_CA_OPTION \
+      -o Acquire::http::Proxy="$HTTP_PROXY" \
+      -o Acquire::https::Proxy="$HTTPS_PROXY" \
+      install -y --no-install-recommends python3-numpy="$BLENDER_NUMPY_PACKAGE_VERSION" && \
+    rm -rf /var/lib/apt/lists/*
+COPY backend/blender_smoke.py /app/backend/blender_smoke.py
+RUN blender --background --python-exit-code 1 --python /app/backend/blender_smoke.py -- --expect-uid 0
+COPY backend ./backend
+RUN chmod -R a=rX /app && \
+    mkdir -p /data/projects && chown -R 10001:10001 /data
+
+USER 10001:10001
+# Fail the image build if the actual runtime user cannot export a textured GLB
+# and editable .blend. --python-exit-code prevents Blender masking script errors.
+RUN blender --background --python-exit-code 1 --python /app/backend/blender_smoke.py -- --expect-uid 10001
+EXPOSE 8012
+VOLUME ["/data"]
+CMD ["python", "-m", "backend.worker"]

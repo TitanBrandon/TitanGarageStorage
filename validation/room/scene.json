@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "units": "estimated_meters",
+  "room": {
+    "width": 4.6271291848503004,
+    "depth": 4.565080655718481,
+    "height": 2.7,
+    "floor_polygon": [
+      [
+        -2.3135645924251502,
+        -2.2825403278592407
+      ],
+      [
+        2.3135645924251502,
+        -2.2825403278592407
+      ],
+      [
+        2.3135645924251502,
+        2.2825403278592407
+      ],
+      [
+        -2.3135645924251502,
+        2.2825403278592407
+      ]
+    ],
+    "walls": [
+      {
+        "id": "back",
+        "start": [
+          -2.3135645924251502,
+          -2.2825403278592407
+        ],
+        "end": [
+          2.3135645924251502,
+          -2.2825403278592407
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "wall",
+        "openings": [
+          {
+            "kind": "door",
+            "offset": 2.3476978672002904,
+            "width": 0.9912560650556674,
+            "height": 1.961629684389077,
+            "bottom": 0.0,
+            "confidence": 0.48,
+            "material": null
+          },
+          {
+            "kind": "door",
+            "offset": 3.470927855070684,
+            "width": 0.8412327661156862,
+            "height": 1.9428378444988932,
+            "bottom": 0.0,
+            "confidence": 0.48,
+            "material": null
+          }
+        ]
+      },
+      {
+        "id": "left",
+        "start": [
+          -2.3135645924251502,
+          2.2825403278592407
+        ],
+        "end": [
+          -2.3135645924251502,
+          -2.2825403278592407
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "wall-left",
+        "openings": []
+      },
+      {
+        "id": "right",
+        "start": [
+          2.3135645924251502,
+          -2.2825403278592407
+        ],
+        "end": [
+          2.3135645924251502,
+          2.2825403278592407
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "wall-right",
+        "openings": []
+      },
+      {
+        "id": "front-estimated",
+        "start": [
+          2.3135645924251502,
+          2.2825403278592407
+        ],
+        "end": [
+          -2.3135645924251502,
+          2.2825403278592407
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "unseen-wall",
+        "openings": []
+      }
+    ],
+    "ceiling": false,
+    "floor_material": "floor",
+    "ceiling_material": "ceiling"
+  },
+  "camera": {
+    "position": [
+      0.3506306992964811,
+      1.4381242730107824,
+      1.6325403278592407
+    ],
+    "target": [
+      0.3506306992964811,
+      1.0348673709241516,
+      -2.26171703545158
+    ],
+    "fov": 47.553467777197234,
+    "aspect": 1.5023474178403755,
+    "fov_axis": "vertical"
+  },
+  "walk_start": {
+    "position": [
+      0.3506306992964811,
+      1.65,
+      1.6325403278592407
+    ],
+    "target": [
+      0.3506306992964811,
+      1.2467430979133691,
+      -2.26171703545158
+    ]
+  },
+  "objects": [],
+  "materials": {
+    "floor": {
+      "color": [
+        0.498,
+        0.3961,
+        0.2627
+      ],
+      "roughness": 0.65,
+      "metalness": 0.03,
+      "kind": "floor",
+      "texture": "textures/floor.png",
+      "texture_tile_size": 1.6,
+      "texture_repeat": true
+    },
+    "wall": {
+      "color": [
+        0.6078,
+        0.5608,
+        0.498
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/wall.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "wall-left": {
+      "color": [
+        0.6078,
+        0.5608,
+        0.498
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/wall-left.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "wall-right": {
+      "color": [
+        0.3137,
+        0.2,
+        0.1294
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/wall-right.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "ceiling": {
+      "color": [
+        0.6078,
+        0.5608,
+        0.498
+      ],
+      "roughness": 0.9,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": null,
+      "texture_tile_size": 1.0,
+      "texture_repeat": true
+    },
+    "unseen-wall": {
+      "color": [
+        0.6078,
+        0.5608,
+        0.498
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "estimated_paint",
+      "texture": null,
+      "texture_tile_size": 1.0,
+      "texture_repeat": true
+    }
+  },
+  "source": {
+    "image_path": "room.jpg",
+    "width": 640,
+    "height": 426,
+    "sha256": "52f5c435984399ca053b6c50e57ee9b39b4634db6ecab7f8a57b5710c086bfd9"
+  },
+  "analysis": {
+    "confidence": 0.609,
+    "warnings": [
+      "Dimensions are estimates anchored to an assumed 2.7 m ceiling; a single photograph cannot establish metric scale.",
+      "Hidden geometry, furniture backs and surfaces behind the camera are unobserved estimates. Only box-like major objects are supported.",
+      "The wall behind the source camera is an estimated solid closure with a sampled wall finish; its actual shape, openings and details are unknown.",
+      "Source lighting is partly baked into photographed finishes; browser reflections and unseen materials are approximations.",
+      "The confidence score measures floor/edge support, not photographic fidelity or semantic accuracy. Review the photo comparison and detected regions.",
+      "One or both outer wall corners are cropped. Side-wall positions require review in the correction controls.",
+      "A wall/ceiling junction was not established. The ceiling is left open instead of placing an unsupported low roof.",
+      "Weak vanishing-point evidence: camera field of view uses a 67 degree horizontal prior. Check camera alignment.",
+      "No major cabinet-like foreground rectangles were reliably separated. Furniture visible in the image may be omitted; inspect the photo comparison and try a clearer, less occluded photo before relying on this walkthrough.",
+      "Detected openings are geometric hypotheses; review them before using the model for planning."
+    ],
+    "method": "depth-anything-v2-small + affine inverse-depth RANSAC + LSD Manhattan line/layout fitting + rectangular region analysis (CPU)",
+    "diagnostics": {
+      "depth": "depth.png",
+      "overlay": "analysis-overlay.jpg",
+      "floor_mask": "floor-mask.png",
+      "wall_mask": "wall-mask.png",
+      "image_corners": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          553.4023132324219,
+          0.0
+        ],
+        [
+          553.4023132324219,
+          335.85479736328125
+        ],
+        [
+          0.0,
+          335.85479736328125
+        ]
+      ],
+      "vanishing_point": [
+        293.33243979628605,
+        162.93615158725936
+      ],
+      "analysis_size": [
+        640,
+        426
+      ],
+      "floor_inlier_ratio": 0.745,
+      "floor_coverage": 0.245143779342723,
+      "line_count": 20,
+      "vanishing_point_votes": 2,
+      "object_count": 0,
+      "inverse_depth_floor_plane": [
+        -0.022006922855691502,
+        2.779590712237171,
+        -1.7447724074487632
+      ],
+      "focal_length_pixels": 483.4672619567683,
+      "camera_pitch_radians": -0.10318391919066586,
+      "floor_high_frequency_std": 1.5431766510009766
+    }
+  }
+}

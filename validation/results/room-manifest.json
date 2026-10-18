@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "builder": "Blender structured-scene reconstruction",
+  "blender_version": "3.4.1",
+  "coordinate_system": "Y-up, meters, object-front +Z",
+  "artifacts": {
+    "blend": "scene.blend",
+    "glb": "scene.glb",
+    "preview": "preview.png",
+    "scene": "scene.json"
+  },
+  "mesh_count": 9,
+  "vertex_count": 72,
+  "triangle_count": 108,
+  "gltf_mesh_count": 9,
+  "gltf_material_count": 5,
+  "embedded_texture_count": 9,
+  "texture_names": [
+    "textures/blender_floor_normal.png",
+    "textures/blender_unseen-wall_normal.png",
+    "textures/blender_wall-left_normal.png",
+    "textures/blender_wall-right_normal.png",
+    "textures/blender_wall_normal.png",
+    "textures/floor.png",
+    "textures/wall-left.png",
+    "textures/wall-right.png",
+    "textures/wall.png"
+  ],
+  "camera": {
+    "position": [
+      0.3529598741626023,
+      1.4376248747022586,
+      1.632479935171021
+    ],
+    "target": [
+      0.3529598741626023,
+      1.0348654711029575,
+      -2.2617074831745456
+    ],
+    "fov": 47.553467777197234,
+    "aspect": 1.5023474178403755,
+    "fov_axis": "vertical"
+  },
+  "walk_start": {
+    "position": [
+      0.3529598741626023,
+      1.65,
+      1.632479935171021
+    ],
+    "target": [
+      0.3529598741626023,
+      1.2472405964006987,
+      -2.2617074831745456
+    ]
+  },
+  "room": {
+    "width": 4.621954405392111,
+    "depth": 4.564959870342042,
+    "height": 2.7,
+    "floor_polygon": [
+      [
+        -2.3109772026960553,
+        -2.282479935171021
+      ],
+      [
+        2.3109772026960553,
+        -2.282479935171021
+      ],
+      [
+        2.3109772026960553,
+        2.282479935171021
+      ],
+      [
+        -2.3109772026960553,
+        2.282479935171021
+      ]
+    ]
+  },
+  "collisions": [
+    {
+      "id": "back solid 0",
+      "kind": "wall",
+      "position": [
+        -1.141212041086726,
+        1.35,
+        -2.282479935171021
+      ],
+      "dimensions": [
+        2.339530323218659,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 1",
+      "kind": "wall",
+      "position": [
+        0.5281115320840235,
+        2.3307651067931934,
+        -2.282479935171021
+      ],
+      "dimensions": [
+        0.9991168231228396,
+        0.7384697864136138,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 2",
+      "kind": "wall",
+      "position": [
+        1.0936775263639666,
+        1.35,
+        -2.282479935171021
+      ],
+      "dimensions": [
+        0.13201516543704717,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 3",
+      "kind": "wall",
+      "position": [
+        1.5804269707637828,
+        2.325648885626936,
+        -2.282479935171021
+      ],
+      "dimensions": [
+        0.8414837233625856,
+        0.7487022287461287,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "back solid 4",
+      "kind": "wall",
+      "position": [
+        2.156073017570566,
+        1.35,
+        -2.282479935171021
+      ],
+      "dimensions": [
+        0.3098083702509795,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 0
+    },
+    {
+      "id": "left solid 0",
+      "kind": "wall",
+      "position": [
+        -2.3109772026960553,
+        1.35,
+        0
+      ],
+      "dimensions": [
+        4.564959870342042,
+        2.7,
+        0.12
+      ],
+      "rotation_y": 1.5707963267948966
+    },
+    {
+      "id": "right solid 0",
+      "kind": "wall",
+      "position": [
+        2.3109772026960553,
+        1.35,
+        0
+      ],
+      "dimensions": [
+        4.564959870342042,
+        2.7,
+        0.12
+      ],
+      "rotation_y": -1.5707963267948966
+    },
+    {
+      "id": "front-estimated solid 0",
+      "kind": "wall",
+      "position": [
+        0,
+        1.35,
+        2.282479935171021
+      ],
+      "dimensions": [
+        4.621954405392111,
+        2.7,
+        0.12
+      ],
+      "rotation_y": -3.141592653589793
+    }
+  ],
+  "source": {
+    "image_path": "source.jpg",
+    "width": 640,
+    "height": 426,
+    "sha256": "31c85c3f72bd78f8170fcb222f41a9329f5b499c9228bfce3d7ad55dc3661326"
+  },
+  "warnings": [
+    "Dimensions are estimates anchored to an assumed 2.7 m ceiling; a single photograph cannot establish metric scale.",
+    "Hidden geometry, furniture backs and surfaces behind the camera are unobserved estimates. Only box-like major objects are supported.",
+    "The wall behind the source camera is an estimated solid closure with a sampled wall finish; its actual shape, openings and details are unknown.",
+    "Source lighting is partly baked into photographed finishes; browser reflections and unseen materials are approximations.",
+    "The confidence score measures floor/edge support, not photographic fidelity or semantic accuracy. Review the photo comparison and detected regions.",
+    "One or both outer wall corners are cropped. Side-wall positions require review in the correction controls.",
+    "A wall/ceiling junction was not established. The ceiling is left open instead of placing an unsupported low roof.",
+    "Weak vanishing-point evidence: camera field of view uses a 67 degree horizontal prior. Check camera alignment.",
+    "No major cabinet-like foreground rectangles were reliably separated. Furniture visible in the image may be omitted; inspect the photo comparison and try a clearer, less occluded photo before relying on this walkthrough.",
+    "Detected openings are geometric hypotheses; review them before using the model for planning."
+  ],
+  "validation": {
+    "glb_version": 2,
+    "embedded_textures": true,
+    "has_real_meshes": true,
+    "preview_renderer": "Cycles CPU"
+  }
+}

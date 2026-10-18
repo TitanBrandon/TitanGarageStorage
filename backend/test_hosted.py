@@ -1,4 +1,4 @@
-"""Hosted access and routing checks; never invoke paid provider generation."""
+"""Hosted authentication and durable-worker routing checks."""
 
 import os
 from pathlib import Path
@@ -21,7 +21,7 @@ class HostedSite(unittest.TestCase):
         self.assets = Path(self.directory.name)
         (self.assets / "index.html").write_text("<html><title>Space Studio test</title></html>")
         (self.assets / "bundle.js").write_text("console.log('test');")
-        self.env = patch.dict(os.environ, {"SITE_PASSWORD": TEST_PASSWORD, "WORLDLABS_API_KEY": "", "WLT_API_KEY": ""})
+        self.env = patch.dict(os.environ, {"SITE_PASSWORD": TEST_PASSWORD, "WORKER_URL": "", "WORKER_TOKEN": ""})
         self.env.start()
         self.context = TestClient(create_app(self.assets))
         self.client = self.context.__enter__()
@@ -37,20 +37,21 @@ class HostedSite(unittest.TestCase):
         self.assertEqual(result.json(), {"ready": True})
 
     def test_site_assets_and_api_require_the_site_login(self):
-        for path in ["/", "/bundle.js", "/api/worlds/status"]:
+        for path in ["/", "/bundle.js", "/api/projects/status"]:
             with self.subTest(path=path):
                 result = self.client.get(path)
                 self.assertEqual(result.status_code, 401)
                 self.assertIn("Basic", result.headers["www-authenticate"])
-        result = self.client.post("/api/worlds", content=b"not even parsed")
+        result = self.client.post("/api/projects", content=b"not even parsed")
         self.assertEqual(result.status_code, 401)
 
     def test_correct_login_serves_frontend_and_nonsecret_api_status(self):
         result = self.client.get("/", auth=self.login)
         self.assertEqual(result.status_code, 200)
         self.assertIn("Space Studio test", result.text)
-        result = self.client.get("/api/worlds/status", auth=self.login)
-        self.assertEqual(result.json(), {"configured": False, "provider": "World Labs"})
+        result = self.client.get("/api/projects/status", auth=self.login)
+        self.assertFalse(result.json()["configured"])
+        self.assertTrue(result.json()["setupRequired"])
         self.assertEqual(result.headers["cache-control"], "no-store")
         self.assertNotIn(TEST_PASSWORD, result.text)
 
@@ -59,15 +60,15 @@ class HostedSite(unittest.TestCase):
             self.assertEqual(self.client.get("/", auth=auth).status_code, 401)
         self.assertEqual(self.client.get("/", headers={"Authorization": "Basic malformed!"}).status_code, 401)
 
-    def test_missing_api_key_never_calls_a_paid_service(self):
-        result = self.client.post("/api/worlds", auth=self.login, files={"photo": ("photo.jpg", b"test", "image/jpeg")})
+    def test_missing_worker_requires_setup(self):
+        result = self.client.post("/api/projects", auth=self.login, files={"photo": ("photo.jpg", b"test", "image/jpeg")})
         self.assertEqual(result.status_code, 503)
-        self.assertIn("WORLDLABS_API_KEY", result.json()["detail"])
+        self.assertIn("WORKER_URL", result.json()["detail"])
 
     def test_upload_limits_and_cross_site_guard_are_retained(self):
-        result = self.client.post("/api/worlds", auth=self.login, headers={"Content-Length": "99999999"}, content=b"x")
+        result = self.client.post("/api/projects", auth=self.login, headers={"Content-Length": "99999999"}, content=b"x")
         self.assertEqual(result.status_code, 413)
-        result = self.client.post("/api/worlds", auth=self.login, headers={"Sec-Fetch-Site": "cross-site"}, content=b"x")
+        result = self.client.post("/api/projects", auth=self.login, headers={"Sec-Fetch-Site": "cross-site"}, content=b"x")
         self.assertEqual(result.status_code, 403)
 
     def test_unknown_api_is_not_served_as_html(self):

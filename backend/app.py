@@ -18,7 +18,7 @@ from starlette.concurrency import run_in_threadpool
 
 from backend.model import MODEL_NAME, MODEL_PATH, MODEL_SHA256
 from backend.limits import MAX_BODY_BYTES, MAX_UPLOAD_BYTES, RequestLimits
-from backend.worlds import provider_status, router as worlds_router
+from backend.projects import router as projects_router, worker_config
 
 MAX_PIXELS = 24_000_000
 OUTPUT_LONG_EDGE = 1600
@@ -120,12 +120,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Titan Space Studio", lifespan=lifespan, docs_url=None, redoc_url=None)
 app.add_middleware(RequestLimits)
-app.include_router(worlds_router)
+app.include_router(projects_router)
 
 
 @app.get("/api/health")
 def health():
-    return {"ready": True, "depthReady": engine.session is not None, "model": MODEL_NAME, "error": engine.error, "worldsConfigured": provider_status()["configured"]}
+    return {"ready": True, "depthReady": engine.session is not None, "model": MODEL_NAME, "error": engine.error, "workerConfigured": bool(worker_config())}
 
 
 @app.post("/api/depth")

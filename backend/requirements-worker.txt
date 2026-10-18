@@ -1,0 +1,12 @@
+# Python 3.12 reconstruction worker. Blender is installed by the OS/image.
+-r requirements-hosted.txt
+coloredlogs==15.0.1
+flatbuffers==25.12.19
+humanfriendly==10.0
+mpmath==1.3.0
+numpy==2.2.6
+onnxruntime==1.22.1
+opencv-python-headless==4.11.0.86
+packaging==26.3
+protobuf==7.36.2
+sympy==1.14.0

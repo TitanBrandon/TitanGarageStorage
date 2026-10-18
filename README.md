@@ -1,77 +1,79 @@
 # Titan Space Studio
 
-Upload a real photo, generate an explorable scene using the World Labs Marble API, and walk through its Gaussian-splat output in a Three.js/Spark viewer. This replaces the original cartoon showroom and limited photo-depth mesh. No sample geometry is presented as a reconstruction of your photo.
+Photo-guided reconstruction of garages and interiors, using a local depth model, geometric image analysis, headless Blender, and a Three.js GLB walkthrough. Each project stores its source image, structured scene description, source-camera preview, editable `.blend`, and textured `.glb` on a persistent reconstruction worker. The website retains Titan branding and its shared sign-in.
 
-**A provider API key and API credits are required to generate a world.** The integration cannot be described as live-validated until it successfully generates a world with an authorized account. Local exported SPZ/PLY/SPLAT scenes can be imported without an API key.
+No paid scene-generation API or provider API key is required. The reconstruction worker supplies the compute and storage; it is separate from the lightweight website. See [DEPLOY.md](DEPLOY.md) for the deployment contract and resource requirements. The existing website address is **https://titan-space-studio.onrender.com/**; new features require deployment of this code and connection of the worker.
 
-## Open it as a website
+## Use the website
 
-[**Deploy Space Studio to Render**](https://render.com/deploy?repo=https://github.com/TitanBrandon/TitanGarageStorage)
+1. Open the existing site and sign in as **titan** with your site password.
+2. Choose a clear garage or interior photo, then click **Create 3D walkthrough**. Measurements are optional. JPG, PNG and WebP are accepted, up to 15 MB and 24 megapixels, with at least 192 pixels per side.
+3. Follow the worker's actual analysis, Blender build and validation stages. Reloading reconnects to the saved project. **Cancel reconstruction** requests cancellation of that worker job.
+4. Use **Compare photo** for the original beside the matched source camera. **Blender preview** displays the generated preview render; it is distinct from the interactive model.
+5. Use **Orbit**, or **Walk through** with mouse/WASD or arrow keys. On touch screens, drag to look and hold the movement buttons. Walking uses a grounded eye height and collision against the modeled room and supported major objects. Press Escape to release the mouse.
+6. Review the confidence notes. Optionally correct dimensions, camera alignment, wall corners or object positions, then rebuild. The previous completed revision remains available while the new one processes.
+7. Reopen a project from **Saved spaces**, or download its GLB, Blender project, scene JSON and preview.
 
-Deploy once, then bookmark the website Render provides. No local Python, downloads or terminal are needed. The included Blueprint selects free hosting, keeps the World Labs key on the server, and generates a site password. Sign in with username **titan** and the generated password. Free hosting may pause when idle; an always-on plan is optional. See [DEPLOY.md](DEPLOY.md) for the one-time account and deployment steps. A public website is not created just by publishing the Codex environment.
+If the website says **Reconstruction worker needed**, its web server is running but reconstruction is not configured. Follow [DEPLOY.md](DEPLOY.md); the app will not substitute a sample room. The previous Windows ZIP packages have been retired because they contain the superseded workflow. Normal website use does not require Python, Blender or a ZIP on the user's computer.
 
-## Try the Windows download
+## What one photo can establish
 
-[**Download Space Studio v0.2 for Windows**](https://github.com/TitanBrandon/TitanGarageStorage/raw/refs/heads/main/downloads/Titan-Space-Studio-Windows-v0.2.zip)
+The source image drives the inferred camera, room surfaces, supported major objects, colors and material textures. Blender constructs real meshes with side surfaces and exports embedded textures. A depth map alone is not the finished scene.
 
-Install Python 3.12, extract the entire ZIP, and double-click **Start Windows.bat**. The download contains the built frontend, so it does not need Node.js. On first launch it installs Python dependencies and asks for a World Labs API key in the terminal. Typing/pasting the key is hidden. The key is retained only in memory for that session. Press Enter without a key to import an existing scene instead.
+One view leaves room dimensions, hidden surfaces, occluded objects and ambiguous boundaries uncertain. The first implementation prioritizes garages and interiors with visible architectural lines and floor space. It does not provide a measured scan, guarantee exact object recognition, or establish the backs of objects. Detailed clutter, reflective vehicles, lettering and unusual architecture can remain inaccurate or unsupported. Review each project's warnings and source comparison before relying on the result. Unsupported inputs should report a failure, not a successful generic scene.
 
-Create a World Labs API account, credits and key at https://platform.worldlabs.ai/ . API access and API credits may differ from consumer Marble subscriptions; consult your account for eligibility and current pricing. Keep the terminal window open while using the app. **START HERE.txt** contains the full steps.
+## Development website
 
-## Development
-
-Requires Node.js 22.12+ (Node 24 tested), Python 3.12 and a browser with WebGL2.
+Requires Node.js 22.12+ (Node 24 supported), Python 3.12, and a browser with hardware-accelerated WebGL. Work in the existing checkout; cloud tasks are already isolated, so do not create a Git worktree unless explicitly requested.
 
 ```sh
 bash scripts/setup.sh
-# Configure WORLDLABS_API_KEY in your process or secure environment settings.
+```
+
+Configure these process environment variables using your shell or secure environment settings, without committing their values:
+
+- `SITE_PASSWORD`: at least 16 characters; the browser signs in as `titan`.
+- `WORKER_URL`: worker origin, for example `http://127.0.0.1:8012` for a local worker, or its HTTPS origin in production.
+- `WORKER_TOKEN`: the same private bearer token configured on the worker.
+- `TITAN_PYTHON`: optional Python executable; startup otherwise detects `.venv` and the cloud `/workspace/.titan-venv`.
+
+```sh
 npm run dev
 ```
 
-The cloud snapshot uses `/workspace/.titan-venv`; startup detects it. For another venv, set `TITAN_PYTHON` to its Python executable. The Python API binds to loopback on 8000 and Vite forwards `/api` from 5173. Startup waits for the app server, but provider availability and credentials are checked separately in the UI. Stop both with Ctrl+C. If this project's API is already running, use `npm run dev:ui` for just the frontend.
+The authenticated website API runs on loopback port 8000; Vite on loopback 5173 forwards `/api`. Sign in with the same site credentials for protected API requests. The script starts the production `backend.hosted` API, not a different generation backend. `TITAN_UI_HOST` can explicitly change the Vite binding for a trusted preview environment. Stop the website with Ctrl+C. It does not stop the separately managed worker or delete saved projects.
 
-For the Python-only packaged app, `scripts/run_local.py` serves the built frontend and API together. In a source checkout, build first with `npm run build`.
+`scripts/setup.sh` installs only the lightweight web dependencies and frontend build by default. It does not install Blender, download the depth model, start a worker, or expose a worker to the network. A real worker is required for reconstruction; missing worker configuration is reported in the UI.
 
-## Generate and explore
+## Run a worker
 
-1. Connect a World Labs API account with credits. Keep `WORLDLABS_API_KEY` server-side; `WLT_API_KEY` is also accepted.
-2. Select a JPG/PNG/WebP photo (15 MB maximum, at least 128 pixels per side, up to 24 megapixels).
-3. Select quick preview (`Marble 0.1-mini`) or quality (`Marble 0.1-plus`) and submit the generation once. Each accepted request uses provider credits. Your photo is sent to World Labs.
-4. Wait for the provider operation. The app polls the existing operation and preserves its ID across reloads; it never resubmits a paid generation automatically. Stopping polling does not cancel provider generation or reverse its charges.
-5. Once the scene asset is ready, use Orbit or Walk through. If the browser cannot load the asset, the provider's own Marble viewer link remains available when returned.
+The portable supported path is the worker Docker image and persistent Compose volume in [DEPLOY.md](DEPLOY.md). Reconstruction uses CPU inference and headless Blender; no GPU is required for the initial pipeline. Provision the worker independently of the Render web container and preserve its project volume, including SQLite and artifacts.
 
-Mouse: drag to look; in walk mode use W/A/S/D or arrow keys and Escape to release the mouse. Touch: drag to look and hold the on-screen movement arrows. Reset returns to the initial viewpoint. Local scene import also accepts an exported SPZ, PLY or SPLAT file.
+For an already provisioned local machine with Blender installed, see [backend/README.md](backend/README.md). `bash scripts/setup.sh --worker` installs pinned worker Python packages and downloads the checksum-verified depth model. It checks for Blender but does not install the system package. Start exactly one worker process and set `PROJECTS_DIR` to a persistent location outside the checkout. The documented local command binds the worker to loopback and retains bearer authentication.
 
-## What realistic means
-
-Gaussian splats can preserve a realistic photographic appearance. One-photo world generation still invents surfaces and areas outside the original viewpoint. Cars, lettering, layout, lighting and proportions may change. This is a visual concept, not a measured reconstruction. For a faithful walkthrough of the actual property, capture overlapping photos or a slow video/spatial scan and reconstruct those observations instead.
-
-The viewer supports free navigation; without a verified collider mesh it does not guarantee wall/car collision or an accurately grounded walking height. We do not claim exact physical scale.
-
-## Network and credentials
-
-Generation calls `https://api.worldlabs.ai/marble/v1` using a server-side `WLT-Api-Key` header. The app accepts a runtime `WORLDLABS_API_KEY` or `WLT_API_KEY`. Cloud environment settings declare the secure key and network access for `api.worldlabs.ai` / `*.worldlabs.ai`. Generated asset URLs may use additional provider destinations; add only observed required hosts if a real response identifies them. Do not disable TLS verification.
-
-The API key is never sent to the frontend. Unlike the earlier local-depth experiment, generation sends the uploaded photo to an external service; review the provider's terms for retention and usage. The app does not retain a photo library. This is a local development prototype without public user accounts or public API authentication. Public hosting needs a separate deployment and authentication setup.
-
-## Validation
+To serve an existing frontend build without Vite:
 
 ```sh
 npm run build
-/workspace/.titan-venv/bin/python -m unittest backend.test_worlds -v
-# Keep the backend running for browser checks:
+python3.12 scripts/run_local.py
+```
+
+This launcher uses the same `SITE_PASSWORD`, `WORKER_URL` and `WORKER_TOKEN` settings. It serves the production-style authenticated website on loopback, opens the browser when ready, and does not ask for a paid API key or launch an unauthenticated remote worker.
+
+## Backend and validation
+
+- [Backend workflow and API](backend/README.md)
+- [Model provenance, license and download integrity](backend/MODELS.md)
+- [Blender scene construction](backend/BLENDER.md)
+- [Render and worker deployment](DEPLOY.md)
+- [Actual photo results, browser evidence and fidelity limits](validation/README.md)
+
+```sh
+npm run build
+.venv/bin/python -m unittest discover -s backend -p 'test_*.py' -v
 npm test
 ```
 
-Use `.venv/bin/python` on another machine. Browser checks use system Chromium if available, or Playwright Chromium (`npx playwright install chromium`). Mocked provider checks verify the integration contract and errors; they do not prove provider generation quality or live account access. A real splat import validates rendering independently of a paid generation. No paid provider request is made by the automated tests.
+Use the configured venv's Python path on other machines. Browser checks require Chromium, available through system Chromium or `npx playwright install chromium`. Tests that exercise reconstruction need the real worker, model and Blender runtime, with a separate test project directory. A frontend build, mocked API check or imported prebuilt GLB does not establish reconstruction quality. Actual photo-to-model checks must inspect the generated preview, textured browser model, additional viewpoints and collision, and report input-specific limitations.
 
-## Official references
-
-- [World Labs image generation example](https://github.com/worldlabsai/worldlabs-api-examples/blob/main/generate-world-from-image.py)
-- [World Labs API models](https://github.com/worldlabsai/worldlabs-api-python/blob/main/src/worldlabs_api/models.py)
-- [World Labs viewer example](https://github.com/worldlabsai/worldlabs-api-examples/blob/main/web-generate-world/index.html)
-- [Spark viewer](https://github.com/sparkjsdev/spark)
-
-The earlier local Depth Anything endpoint remains available for comparison. Its optional model downloader, license and limitations are documented in backend/MODELS.md; it is not the realistic generation workflow and setup no longer downloads that model.
-
-Cloud tasks already provide isolated workspaces. Use the existing checkout; do not create a Git worktree unless the user explicitly requests it.
+The public `/healthz` endpoint checks website liveness. Project requests and uploaded/generated assets stay behind the existing site authentication; the browser accesses them through same-origin URLs. The server forwards requests to the worker with its private token. Runtime reconstruction does not call an external scene-generation provider. Retention and backups are controlled by the owner of the worker's durable project storage.

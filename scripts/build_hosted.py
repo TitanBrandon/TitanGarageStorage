@@ -9,6 +9,8 @@ from urllib.parse import urlsplit
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--cloud-network", action="store_true")
+parser.add_argument("--file", default="Dockerfile")
+parser.add_argument("--tag", default="titan-space-studio:hosted")
 args = parser.parse_args()
 command = ["docker"]
 if args.cloud_network:
@@ -33,5 +35,5 @@ if args.cloud_network:
         if b"PRIVATE KEY" in content:
             raise SystemExit("The build trust bundle must contain public certificates only.")
         command += ["--secret", "id=build_ca,src=" + certificate]
-command += ["--tag", "titan-space-studio:hosted", "."]
+command += ["--file", args.file, "--tag", args.tag, "."]
 raise SystemExit(subprocess.call(command, cwd=Path(__file__).resolve().parents[1]))

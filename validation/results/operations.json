@@ -1,0 +1,96 @@
+{
+  "kind": "actual hosted HTTP + actual worker/process lifecycle validation",
+  "checks": {
+    "completedProjectsSurvivedRestart": {
+      "passed": true,
+      "ids": [
+        "59ee50df-55fd-4416-8e9c-0cafecf544be",
+        "7569a193-57b7-4b98-ae43-b95877a04d2e"
+      ]
+    },
+    "blankPhotoFailure": {
+      "passed": true,
+      "id": "bf94db96-9718-4a0b-8f31-ebe4bcccc06b",
+      "state": "failed",
+      "message": "No supported interior wall layout was found. Try a photo showing clear vertical wall corners and a ceiling; outdoor/open-sided scenes are currently unsupported.",
+      "stages": [
+        [
+          "queued",
+          "queued"
+        ],
+        [
+          "running",
+          "analyzing"
+        ],
+        [
+          "failed",
+          "failed"
+        ]
+      ]
+    },
+    "runningJobCancellation": {
+      "passed": true,
+      "id": "48eb3a5f-b6bd-4475-a6ac-22f16b85553e",
+      "state": "cancelled",
+      "stages": [
+        [
+          "queued",
+          "queued"
+        ],
+        [
+          "running",
+          "analyzing"
+        ],
+        [
+          "running",
+          "cancelling"
+        ],
+        [
+          "cancelled",
+          "cancelled"
+        ]
+      ]
+    },
+    "interruptedRunningJobRecovery": {
+      "passed": true,
+      "id": "4936a280-4f45-4e65-b6ba-ccf3c9486336",
+      "stateBeforeRestart": "running",
+      "stateAfterRestart": "completed",
+      "stages": [
+        [
+          "queued",
+          "queued"
+        ],
+        [
+          "running",
+          "analyzing"
+        ],
+        [
+          "running",
+          "analyzing"
+        ],
+        [
+          "running",
+          "building"
+        ],
+        [
+          "running",
+          "rendering_preview"
+        ],
+        [
+          "completed",
+          "completed"
+        ]
+      ],
+      "glbBytes": 483120
+    },
+    "terminalStatesPersistAfterSecondRestart": {
+      "passed": true
+    },
+    "artifactsRequireSiteAuthentication": {
+      "passed": true,
+      "unauthenticatedStatus": 401
+    }
+  },
+  "allPassed": true
+}

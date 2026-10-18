@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "units": "estimated_meters",
+  "room": {
+    "width": 6.053492512788086,
+    "depth": 7.5080698354651645,
+    "height": 2.7,
+    "floor_polygon": [
+      [
+        -3.026746256394043,
+        -3.7540349177325822
+      ],
+      [
+        3.026746256394043,
+        -3.7540349177325822
+      ],
+      [
+        3.026746256394043,
+        3.7540349177325822
+      ],
+      [
+        -3.026746256394043,
+        3.7540349177325822
+      ]
+    ],
+    "walls": [
+      {
+        "id": "back",
+        "start": [
+          -3.026746256394043,
+          -3.7540349177325822
+        ],
+        "end": [
+          3.026746256394043,
+          -3.7540349177325822
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "wall",
+        "openings": [
+          {
+            "kind": "window",
+            "offset": 2.0697702590849936,
+            "width": 1.8844858425636994,
+            "height": 0.6678362171709586,
+            "bottom": 1.1898193739799476,
+            "confidence": 0.52,
+            "material": "window-1"
+          }
+        ]
+      },
+      {
+        "id": "left",
+        "start": [
+          -3.026746256394043,
+          3.7540349177325822
+        ],
+        "end": [
+          -3.026746256394043,
+          -3.7540349177325822
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "wall-left",
+        "openings": []
+      },
+      {
+        "id": "right",
+        "start": [
+          3.026746256394043,
+          -3.7540349177325822
+        ],
+        "end": [
+          3.026746256394043,
+          3.7540349177325822
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "wall-right",
+        "openings": []
+      },
+      {
+        "id": "front-estimated",
+        "start": [
+          3.026746256394043,
+          3.7540349177325822
+        ],
+        "end": [
+          -3.026746256394043,
+          3.7540349177325822
+        ],
+        "height": 2.7,
+        "thickness": 0.12,
+        "material": "unseen-wall",
+        "openings": []
+      }
+    ],
+    "ceiling": false,
+    "floor_material": "floor",
+    "ceiling_material": "ceiling"
+  },
+  "camera": {
+    "position": [
+      1.5969668712866967,
+      1.6658972870453315,
+      3.1040349177325823
+    ],
+    "target": [
+      1.5969668712866967,
+      -0.13243563113886192,
+      -3.514055485358955
+    ],
+    "fov": 47.553467777197234,
+    "aspect": 1.5023474178403755,
+    "fov_axis": "vertical"
+  },
+  "walk_start": {
+    "position": [
+      1.5969668712866967,
+      1.65,
+      3.1040349177325823
+    ],
+    "target": [
+      1.5969668712866967,
+      -0.14833291818419347,
+      -3.514055485358955
+    ]
+  },
+  "objects": [
+    {
+      "id": "back-object-1",
+      "kind": "box",
+      "position": [
+        0.5711094633944005,
+        0.6197268524613329,
+        -3.389034917732582
+      ],
+      "dimensions": [
+        2.7205922377534044,
+        1.2394537049226657,
+        0.7
+      ],
+      "rotation_y": 0.0,
+      "wall_id": "back",
+      "material": "back-object-1",
+      "front_material": "back-object-1-front",
+      "confidence": 0.58
+    }
+  ],
+  "materials": {
+    "floor": {
+      "color": [
+        0.5412,
+        0.5176,
+        0.451
+      ],
+      "roughness": 0.65,
+      "metalness": 0.03,
+      "kind": "floor",
+      "texture": "textures/floor.png",
+      "texture_tile_size": 1.6,
+      "texture_repeat": true
+    },
+    "wall": {
+      "color": [
+        0.3529,
+        0.3294,
+        0.2941
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/wall.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "wall-left": {
+      "color": [
+        0.3529,
+        0.3294,
+        0.2941
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/wall-left.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "wall-right": {
+      "color": [
+        0.5725,
+        0.549,
+        0.4863
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/wall-right.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "ceiling": {
+      "color": [
+        0.3529,
+        0.3294,
+        0.2941
+      ],
+      "roughness": 0.9,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": null,
+      "texture_tile_size": 1.0,
+      "texture_repeat": true
+    },
+    "unseen-wall": {
+      "color": [
+        0.3529,
+        0.3294,
+        0.2941
+      ],
+      "roughness": 0.82,
+      "metalness": 0.0,
+      "kind": "estimated_paint",
+      "texture": null,
+      "texture_tile_size": 1.0,
+      "texture_repeat": true
+    },
+    "window-1": {
+      "color": [
+        0.9765,
+        0.9725,
+        0.9725
+      ],
+      "roughness": 0.15,
+      "metalness": 0.0,
+      "kind": "glass",
+      "texture": "textures/window-1.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    },
+    "back-object-1": {
+      "color": [
+        0.5961,
+        0.5725,
+        0.5137
+      ],
+      "roughness": 0.66,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": null,
+      "texture_tile_size": 1.0,
+      "texture_repeat": true
+    },
+    "back-object-1-front": {
+      "color": [
+        0.5961,
+        0.5725,
+        0.5137
+      ],
+      "roughness": 0.66,
+      "metalness": 0.0,
+      "kind": "paint",
+      "texture": "textures/back-object-1-front.png",
+      "texture_tile_size": 1.0,
+      "texture_repeat": false
+    }
+  },
+  "source": {
+    "image_path": "warehouse.jpg",
+    "width": 640,
+    "height": 426,
+    "sha256": "9ecce63f013e959fc85afe671d0e48f1fc7d8b1ab4dcb95ffc75cf126248f072"
+  },
+  "analysis": {
+    "confidence": 0.72,
+    "warnings": [
+      "Dimensions are estimates anchored to an assumed 2.7 m ceiling; a single photograph cannot establish metric scale.",
+      "Hidden geometry, furniture backs and surfaces behind the camera are unobserved estimates. Only box-like major objects are supported.",
+      "The wall behind the source camera is an estimated solid closure with a sampled wall finish; its actual shape, openings and details are unknown.",
+      "Source lighting is partly baked into photographed finishes; browser reflections and unseen materials are approximations.",
+      "The confidence score measures floor/edge support, not photographic fidelity or semantic accuracy. Review the photo comparison and detected regions.",
+      "One or both outer wall corners are cropped. Side-wall positions require review in the correction controls.",
+      "A wall/ceiling junction was not established. The ceiling is left open instead of placing an unsupported low roof.",
+      "Object semantics and depth are uncertain. Review detected cabinet/box positions and dimensions; small objects are omitted.",
+      "Detected openings are geometric hypotheses; review them before using the model for planning."
+    ],
+    "method": "depth-anything-v2-small + affine inverse-depth RANSAC + LSD Manhattan line/layout fitting + rectangular region analysis (CPU)",
+    "diagnostics": {
+      "depth": "depth.png",
+      "overlay": "analysis-overlay.jpg",
+      "floor_mask": "floor-mask.png",
+      "wall_mask": "wall-mask.png",
+      "image_corners": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          414.840087890625,
+          0.0
+        ],
+        [
+          414.840087890625,
+          199.92951202392578
+        ],
+        [
+          0.0,
+          199.92951202392578
+        ]
+      ],
+      "vanishing_point": [
+        388.1566459787113,
+        81.62749840420824
+      ],
+      "analysis_size": [
+        640,
+        426
+      ],
+      "floor_inlier_ratio": 1.0,
+      "floor_coverage": 0.5257335680751174,
+      "line_count": 113,
+      "vanishing_point_votes": 25,
+      "object_count": 1,
+      "inverse_depth_floor_plane": [
+        0.02637594263246855,
+        1.8460384570667387,
+        -0.8391050397524275
+      ],
+      "focal_length_pixels": 483.4672619567683,
+      "camera_pitch_radians": -0.26532347285729335,
+      "floor_high_frequency_std": 2.71598482131958
+    }
+  }
+}

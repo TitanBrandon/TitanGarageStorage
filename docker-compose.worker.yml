@@ -1,0 +1,47 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    restart: unless-stopped
+    init: true
+    environment:
+      WORKER_TOKEN: ${WORKER_TOKEN:?Set a long random worker token}
+      PROJECTS_DIR: /data/projects
+      PORT: "8012"
+      BLENDER_TIMEOUT_SECONDS: "1800"
+      OMP_NUM_THREADS: "4"
+      OPENBLAS_NUM_THREADS: "1"
+    ports:
+      - "127.0.0.1:8012:8012"
+    volumes:
+      - titan_projects:/data
+    mem_limit: 8g
+    cpus: 4
+    stop_grace_period: 45s
+
+  # Optional public TLS endpoint. Requires a domain resolving to this server and
+  # inbound ports 80/443. The worker itself still requires its bearer token.
+  caddy:
+    image: caddy:2.10.2-alpine
+    profiles: [https]
+    restart: unless-stopped
+    depends_on:
+      - worker
+    environment:
+      WORKER_DOMAIN: ${WORKER_DOMAIN:-}
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - 'test -n "$$WORKER_DOMAIN"; exec caddy reverse-proxy --from "$$WORKER_DOMAIN" --to worker:8012'
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  titan_projects:
+  caddy_data:
+  caddy_config:

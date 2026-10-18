@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.limits import RequestLimits
-from backend.worlds import router as worlds_router
+from backend.projects import router as projects_router
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -81,7 +81,7 @@ def create_app(static_directory: Path | None = None) -> FastAPI:
     app.add_middleware(RequestLimits)
     # Authentication is the outer middleware, before multipart parsing or routing.
     app.add_middleware(PrivateSite)
-    app.include_router(worlds_router)
+    app.include_router(projects_router)
 
     @app.get("/healthz")
     def health():

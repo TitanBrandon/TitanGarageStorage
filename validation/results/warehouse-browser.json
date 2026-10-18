@@ -1,0 +1,61 @@
+{
+  "projectId": "b8c7e12d-fb80-4fde-84ea-2bfc5481ac9d",
+  "jobId": "a17d37e8-f901-456f-96e1-247a99b0ac41",
+  "acceptedAfterMs": 649,
+  "stages": [
+    "queued",
+    "analyzing",
+    "exporting_glb",
+    "rendering_preview",
+    "completed"
+  ],
+  "meshes": 11,
+  "textures": 13,
+  "glbSha256": "72afd6b9c4a021e708edfd3ae1d2a62fa53780bebfb4cd88ce37fdc23b2f527e",
+  "sourcePosition": [
+    1.597,
+    1.6682,
+    3.1041
+  ],
+  "start": [
+    1.597,
+    1.65,
+    3.1041
+  ],
+  "sideways": [
+    1.4036,
+    1.65,
+    3.1041
+  ],
+  "walked": [
+    1.3607,
+    1.65,
+    2.4886
+  ],
+  "blocked": [
+    1.3605,
+    1.65,
+    -2.7609
+  ],
+  "backwards": [
+    1.3605,
+    1.65,
+    -2.196
+  ],
+  "lookBack": [
+    1.3605,
+    1.65,
+    -2.1475
+  ],
+  "resetPosition": [
+    1.597,
+    1.65,
+    3.1041
+  ],
+  "signature": {
+    "geometry": "9106d61160d64e88d95303d5d09316680d95a6cd1c26059cc1940ca032ccd3e5",
+    "materials": "a20cddb00a27f940702f282234e2d804c3b46ec7c62a578dadb72f1a4ccfb177",
+    "image": "4ea710d1a4bd17655908bb3861146b4373f28d0116df9f758c680698d25a5b99"
+  },
+  "pageErrors": []
+}
